@@ -31,6 +31,42 @@ void tearDown(void)
 {
 }
 
+void changeRootByVal(Node *node, Node *newNode)
+{
+    node = newNode;
+    printf("changeRootByVal: node = %x\n", node);
+}
+
+void changeRootByRef(Node **nodePtr, Node *newNode)
+{
+    *nodePtr = newNode;
+    printf("changeRootByRef: node = %x\n", *nodePtr);
+}
+
+void test_changeRootByVal()
+{
+    Node *root;
+    root = &node10;
+
+    printf("test_changeRootByVal\n");
+    printf("--------------------\n");
+    printf("root is node %d with address %x\n", root->data, root);
+    changeRootByVal(root, &node5);
+    printf("root is node %d with address %x\n\n", root->data, root);
+}
+
+void test_changeRootByRef()
+{
+    Node *root;
+    root = &node10;
+
+    printf("test_changeRootByRef\n");
+    printf("--------------------\n");
+    printf("root is node %d with address %x\n", root->data, root);
+    changeRootByRef(&root, &node5);
+    printf("root is node %d with address %x\n\n", root->data, root);
+}
+
 /**
  * root -> 10
  *         /                5  <- root
@@ -52,6 +88,6 @@ void test_rightRotation(void)
     TEST_ASSERT_EQUAL_PTR(node10.left, NULL);
     TEST_ASSERT_EQUAL_PTR(node10.right, NULL);
     TEST_ASSERT_EQUAL_PTR(node5.left, &node1);
-    TEST_ASSERT_EQUAL_PTR(node5.right, &node10); 
-    TEST_ASSERT_EQUAL_PTR(root, &node5); 
+    TEST_ASSERT_EQUAL_PTR(node5.right, &node10);
+    TEST_ASSERT_EQUAL_PTR(root, &node5);
 }
