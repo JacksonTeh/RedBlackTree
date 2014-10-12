@@ -24,7 +24,8 @@ void rightRotate(Node **nodePtr)
 
 void leftRightRotate(Node **nodePtr)
 {
-
+    leftRotate(&((*nodePtr)->left));
+    rightRotate(&(*nodePtr));
 }
 
 void rightLeftRotate(Node **nodePtr)

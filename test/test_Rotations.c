@@ -77,7 +77,7 @@ void xtest_changeRootByRef()
  *       /               1    10
  *      1
  */
-void test_rightRotation_given_parent_and_two_left_childs_should_rotate_right(void)
+void test_rightRotate_given_parent_and_two_left_childs_should_rotate_right(void)
 {
 	setNode(&node1, NULL, NULL, 'b');
 	setNode(&node5, &node1, NULL, 'b');
@@ -102,7 +102,7 @@ void test_rightRotation_given_parent_and_two_left_childs_should_rotate_right(voi
  *       /                      \
  *      1                       15
  */
-void test_rightRotation_given_parent_and_two_left_childs_one_right_child_should_rotate_right(void)
+void test_rightRotate_given_parent_and_two_left_childs_one_right_child_should_rotate_right(void)
 {
 	setNode(&node1, NULL, NULL, 'b');
 	setNode(&node5, &node1, NULL, 'b');
@@ -130,7 +130,7 @@ void test_rightRotation_given_parent_and_two_left_childs_one_right_child_should_
  *       / \                 /  \
  *      1   7               7   15
  */
-void test_rightRotation_given_parent_and_three_left_childs_one_right_child_should_rotate_right(void)
+void test_rightRotate_given_parent_and_three_left_childs_one_right_child_should_rotate_right(void)
 {
 	setNode(&node1, NULL, NULL, 'b');
 	setNode(&node7, NULL, NULL, 'b');
@@ -236,4 +236,59 @@ void test_leftRotate_given_parent_and_three_right_childs_and_one_left_child_shou
     TEST_ASSERT_EQUAL_PTR(node15.left, &node10);
     TEST_ASSERT_EQUAL_PTR(node15.right, &node20);
     TEST_ASSERT_EQUAL_PTR(root, &node15);
+}
+
+/**
+ * root ->  10            10
+ *         /             /                7  <- root
+ *        5      --->   7     --->      /  \
+ *         \           /               5    10
+ *          7         5
+ */
+void test_leftRightRotate_given_parent_and_two_left_childs_should_rotate_left_then_right(void)
+{
+	setNode(&node7, NULL, NULL, 'b');
+	setNode(&node5, NULL, &node7, 'b');
+	setNode(&node10, &node5, NULL, 'b');
+    Node *root = &node10;
+
+    leftRightRotate(&root);
+
+    TEST_ASSERT_EQUAL_PTR(node5.left, NULL);
+    TEST_ASSERT_EQUAL_PTR(node5.right, NULL);
+    TEST_ASSERT_EQUAL_PTR(node10.left, NULL);
+    TEST_ASSERT_EQUAL_PTR(node10.right, NULL);
+    TEST_ASSERT_EQUAL_PTR(node7.left, &node5);
+    TEST_ASSERT_EQUAL_PTR(node7.right, &node10);
+    TEST_ASSERT_EQUAL_PTR(root, &node7);
+}
+
+/**
+ *                         10
+ *                         /
+ * root ->  10            7               7  <- root
+ *         /             /              /  \
+ *        5      --->   5     --->     5    10
+ *      /  \           /              /
+ *     1    7         1              1
+ */
+void test_leftRightRotate_given_parent_and_three_left_childs_should_rotate_left_then_right(void)
+{
+	setNode(&node1, NULL, NULL, 'b');
+	setNode(&node7, NULL, NULL, 'b');
+	setNode(&node5, &node1, &node7, 'b');
+	setNode(&node10, &node5, NULL, 'b');
+    Node *root = &node10;
+
+    leftRightRotate(&root);
+
+    TEST_ASSERT_EQUAL_PTR(node1.left, NULL);
+    TEST_ASSERT_EQUAL_PTR(node1.right, NULL);
+    TEST_ASSERT_EQUAL_PTR(node5.left, &node1);
+    TEST_ASSERT_EQUAL_PTR(node5.right, NULL);
+    TEST_ASSERT_EQUAL_PTR(node10.left, NULL);
+    TEST_ASSERT_EQUAL_PTR(node10.right, NULL);
+    TEST_ASSERT_EQUAL_PTR(node7.left, &node5);
+    TEST_ASSERT_EQUAL_PTR(node7.right, &node10);
+    TEST_ASSERT_EQUAL_PTR(root, &node7);
 }
