@@ -2,7 +2,13 @@
 
 void leftRotate(Node **nodePtr)
 {
+    Node *tempNode1 = (*nodePtr)->right;
+    Node *tempNode2 = tempNode1->left;
 
+    tempNode1->left = *nodePtr;
+    (*nodePtr)->right = tempNode2;
+
+    *nodePtr = tempNode1;
 }
 
 void rightRotate(Node **nodePtr)
