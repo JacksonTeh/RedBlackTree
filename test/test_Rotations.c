@@ -371,10 +371,10 @@ void test_leftRightRotate_given_parent_with_different_four_left_childs_and_one_r
 
 /**
  * root ->  10            10
- *            \           /                7  <- root
- *            20  --->   7     --->      /  \
- *           /         /               5    10
- *          15        5
+ *            \            \                 15  <- root
+ *            20  --->     15     --->      /  \
+ *           /              \             10   20
+ *          15              20
  */
 void test_rightLeftRotate_given_parent_and_two_right_childs_should_rotate_right_then_left(void)
 {
