@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "Rotations.h"
 
 void leftRotate(Node **nodePtr)
@@ -30,5 +31,6 @@ void leftRightRotate(Node **nodePtr)
 
 void rightLeftRotate(Node **nodePtr)
 {
-
+    rightRotate(&((*nodePtr)->right));
+    leftRotate(&(*nodePtr));
 }
