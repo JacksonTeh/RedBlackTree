@@ -3,7 +3,8 @@
 
 #include "Node.h"
 
-void addRedBlackTree(Node **nodePtr, Node *newNode);
-void _addRedBlackTree(Node **nodePtr, Node *newNode);
+void addRedBlackTree(Node **rootPtr, Node *newNode);
+void _addRedBlackTree(Node **rootPtr, Node *newNode);
+int isNodeRedColour(Node **rootPtr);
 
 #endif // RedBlackTree_H
