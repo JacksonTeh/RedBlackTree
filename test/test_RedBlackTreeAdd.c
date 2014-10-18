@@ -31,7 +31,7 @@ void tearDown(void)
  *                add 10
  * root -> NULL  ------->  10(b)  <- root
  */
-void xtest_addRedBlackTree_add_10_to_empty_tree(void)
+void test_addRedBlackTree_add_10_to_empty_tree(void)
 {
 	setNode(&node10, NULL, NULL, 'r');
     Node *root = NULL;
@@ -52,7 +52,7 @@ void xtest_addRedBlackTree_add_10_to_empty_tree(void)
  *                           /
  *                         5(r)
  */
-void xtest_addRedBlackTree_add_5_to_use_tree_with_root_10(void)
+void test_addRedBlackTree_add_5_to_use_tree_with_only_root_10(void)
 {
 	setNode(&node10, NULL, NULL, 'b');
 	setNode(&node5, NULL, NULL, 'r');
@@ -72,7 +72,7 @@ void xtest_addRedBlackTree_add_5_to_use_tree_with_root_10(void)
  *                              \
  *                             15(r)
  */
-void xtest_addRedBlackTree_add_15_to_use_tree_with_root_10(void)
+void test_addRedBlackTree_add_15_to_use_tree_with_only_root_10(void)
 {
 	setNode(&node10, NULL, NULL, 'b');
 	setNode(&node15, NULL, NULL, 'r');

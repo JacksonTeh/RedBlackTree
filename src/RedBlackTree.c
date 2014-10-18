@@ -58,7 +58,7 @@ void fixRootViolation(Node **rootPtr)
             (*rootPtr)->right->colour = 'r';
         }
     }
-    else
+    else if(root->right != NULL)
     {
         if(root->right->colour == 'r')
         {
