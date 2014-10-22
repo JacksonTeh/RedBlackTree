@@ -109,9 +109,6 @@ int isNodeRedColour(Node **rootPtr)
 {
     Node *root = *rootPtr;
 
-    if(root->left == NULL && root->right == NULL)
-        return 0;
-
     if(root->left != NULL)
     {
         if(root->left->colour == 'r')
