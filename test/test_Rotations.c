@@ -84,9 +84,9 @@ void xtest_changeRootByRef()
  */
 void test_rightRotate_given_parent_and_two_left_childs_should_rotate_right(void)
 {
-	setNode(&node1, NULL, NULL, 'b');
-	setNode(&node5, &node1, NULL, 'b');
-	setNode(&node10, &node5, NULL, 'b');
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node5, &node1, NULL, 'b');
+    setNode(&node10, &node5, NULL, 'b');
     Node *root = &node10;
 
     rightRotate(&root);
@@ -109,10 +109,10 @@ void test_rightRotate_given_parent_and_two_left_childs_should_rotate_right(void)
  */
 void test_rightRotate_given_parent_and_two_left_childs_one_right_child_should_rotate_right(void)
 {
-	setNode(&node1, NULL, NULL, 'b');
-	setNode(&node5, &node1, NULL, 'b');
-	setNode(&node15, NULL, NULL, 'b');
-	setNode(&node10, &node5, &node15, 'b');
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node5, &node1, NULL, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
     Node *root = &node10;
 
     rightRotate(&root);
@@ -137,11 +137,11 @@ void test_rightRotate_given_parent_and_two_left_childs_one_right_child_should_ro
  */
 void test_rightRotate_given_parent_and_three_left_childs_one_right_child_should_rotate_right(void)
 {
-	setNode(&node1, NULL, NULL, 'b');
-	setNode(&node7, NULL, NULL, 'b');
-	setNode(&node5, &node1, &node7, 'b');
-	setNode(&node15, NULL, NULL, 'b');
-	setNode(&node10, &node5, &node15, 'b');
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node7, NULL, NULL, 'b');
+    setNode(&node5, &node1, &node7, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
     Node *root = &node10;
 
     rightRotate(&root);
@@ -168,9 +168,9 @@ void test_rightRotate_given_parent_and_three_left_childs_one_right_child_should_
  */
 void test_leftRotate_given_parent_and_two_right_childs_should_rotate_left(void)
 {
-	setNode(&node20, NULL, NULL, 'b');
-	setNode(&node15, NULL, &node20, 'b');
-	setNode(&node10, NULL, &node15, 'b');
+    setNode(&node20, NULL, NULL, 'b');
+    setNode(&node15, NULL, &node20, 'b');
+    setNode(&node10, NULL, &node15, 'b');
     Node *root = &node10;
 
     leftRotate(&root);
@@ -193,10 +193,10 @@ void test_leftRotate_given_parent_and_two_right_childs_should_rotate_left(void)
  */
 void test_leftRotate_given_parent_and_two_right_childs_and_one_left_child_should_rotate_left(void)
 {
-	setNode(&node20, NULL, NULL, 'b');
-	setNode(&node15, NULL, &node20, 'b');
-	setNode(&node5, NULL, NULL, 'b');
-	setNode(&node10, &node5, &node15, 'b');
+    setNode(&node20, NULL, NULL, 'b');
+    setNode(&node15, NULL, &node20, 'b');
+    setNode(&node5, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
     Node *root = &node10;
 
     leftRotate(&root);
@@ -221,11 +221,11 @@ void test_leftRotate_given_parent_and_two_right_childs_and_one_left_child_should
  */
 void test_leftRotate_given_parent_and_three_right_childs_and_one_left_child_should_rotate_left(void)
 {
-	setNode(&node20, NULL, NULL, 'b');
-	setNode(&node13, NULL, NULL, 'b');
-	setNode(&node15, &node13, &node20, 'b');
-	setNode(&node5, NULL, NULL, 'b');
-	setNode(&node10, &node5, &node15, 'b');
+    setNode(&node20, NULL, NULL, 'b');
+    setNode(&node13, NULL, NULL, 'b');
+    setNode(&node15, &node13, &node20, 'b');
+    setNode(&node5, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
     Node *root = &node10;
 
     leftRotate(&root);
@@ -252,9 +252,9 @@ void test_leftRotate_given_parent_and_three_right_childs_and_one_left_child_shou
  */
 void test_leftRightRotate_given_parent_and_two_left_childs_should_rotate_left_then_right(void)
 {
-	setNode(&node7, NULL, NULL, 'b');
-	setNode(&node5, NULL, &node7, 'b');
-	setNode(&node10, &node5, NULL, 'b');
+    setNode(&node7, NULL, NULL, 'b');
+    setNode(&node5, NULL, &node7, 'b');
+    setNode(&node10, &node5, NULL, 'b');
     Node *root = &node10;
 
     leftRightRotate(&root);
@@ -279,10 +279,10 @@ void test_leftRightRotate_given_parent_and_two_left_childs_should_rotate_left_th
  */
 void test_leftRightRotate_given_parent_and_three_left_childs_should_rotate_left_then_right(void)
 {
-	setNode(&node1, NULL, NULL, 'b');
-	setNode(&node7, NULL, NULL, 'b');
-	setNode(&node5, &node1, &node7, 'b');
-	setNode(&node10, &node5, NULL, 'b');
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node7, NULL, NULL, 'b');
+    setNode(&node5, &node1, &node7, 'b');
+    setNode(&node10, &node5, NULL, 'b');
     Node *root = &node10;
 
     leftRightRotate(&root);
@@ -309,12 +309,12 @@ void test_leftRightRotate_given_parent_and_three_left_childs_should_rotate_left_
  */
 void test_leftRightRotate_given_parent_and_four_left_childs_and_one_right_child_should_rotate_left_then_right(void)
 {
-	setNode(&node1, NULL, NULL, 'b');
-	setNode(&node8, NULL, NULL, 'b');
-	setNode(&node7, NULL, &node8, 'b');
-	setNode(&node5, &node1, &node7, 'b');
-	setNode(&node15, NULL, NULL, 'b');
-	setNode(&node10, &node5, &node15, 'b');
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node8, NULL, NULL, 'b');
+    setNode(&node7, NULL, &node8, 'b');
+    setNode(&node5, &node1, &node7, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
     Node *root = &node10;
 
     leftRightRotate(&root);
@@ -345,12 +345,12 @@ void test_leftRightRotate_given_parent_and_four_left_childs_and_one_right_child_
  */
 void test_leftRightRotate_given_parent_with_different_four_left_childs_and_one_right_child_should_rotate_left_then_right(void)
 {
-	setNode(&node1, NULL, NULL, 'b');
-	setNode(&node6, NULL, NULL, 'b');
-	setNode(&node7, &node6, NULL, 'b');
-	setNode(&node5, &node1, &node7, 'b');
-	setNode(&node15, NULL, NULL, 'b');
-	setNode(&node10, &node5, &node15, 'b');
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node6, NULL, NULL, 'b');
+    setNode(&node7, &node6, NULL, 'b');
+    setNode(&node5, &node1, &node7, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
     Node *root = &node10;
 
     leftRightRotate(&root);
@@ -379,9 +379,9 @@ void test_leftRightRotate_given_parent_with_different_four_left_childs_and_one_r
  */
 void test_rightLeftRotate_given_parent_and_two_right_childs_should_rotate_right_then_left(void)
 {
-	setNode(&node15, NULL, NULL, 'b');
-	setNode(&node20, &node15, NULL, 'b');
-	setNode(&node10, NULL, &node20, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node20, &node15, NULL, 'b');
+    setNode(&node10, NULL, &node20, 'b');
     Node *root = &node10;
 
     rightLeftRotate(&root);
@@ -406,10 +406,10 @@ void test_rightLeftRotate_given_parent_and_two_right_childs_should_rotate_right_
  */
 void test_rightLeftRotate_given_parent_and_three_right_childs_should_rotate_right_then_left(void)
 {
-	setNode(&node15, NULL, NULL, 'b');
-	setNode(&node30, NULL, NULL, 'b');
-	setNode(&node20, &node15, &node30, 'b');
-	setNode(&node10, NULL, &node20, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node30, NULL, NULL, 'b');
+    setNode(&node20, &node15, &node30, 'b');
+    setNode(&node10, NULL, &node20, 'b');
     Node *root = &node10;
 
     rightLeftRotate(&root);
@@ -436,12 +436,12 @@ void test_rightLeftRotate_given_parent_and_three_right_childs_should_rotate_righ
  */
 void test_rightLeftRotate_given_parent_and_four_right_childs_and_one_left_child_should_rotate_right_then_left(void)
 {
-	setNode(&node5, NULL, NULL, 'b');
-	setNode(&node13, NULL, NULL, 'b');
-	setNode(&node15, &node13, NULL, 'b');
-	setNode(&node30, NULL, NULL, 'b');
-	setNode(&node20, &node15, &node30, 'b');
-	setNode(&node10, &node5, &node20, 'b');
+    setNode(&node5, NULL, NULL, 'b');
+    setNode(&node13, NULL, NULL, 'b');
+    setNode(&node15, &node13, NULL, 'b');
+    setNode(&node30, NULL, NULL, 'b');
+    setNode(&node20, &node15, &node30, 'b');
+    setNode(&node10, &node5, &node20, 'b');
     Node *root = &node10;
 
     rightLeftRotate(&root);
@@ -472,12 +472,12 @@ void test_rightLeftRotate_given_parent_and_four_right_childs_and_one_left_child_
  */
 void test_rightLeftRotate_given_parent_with_four_right_childs_and_one_left_child_should_rotate_right_then_left(void)
 {
-	setNode(&node5, NULL, NULL, 'b');
-	setNode(&node17, NULL, NULL, 'b');
-	setNode(&node15, NULL, &node17, 'b');
-	setNode(&node30, NULL, NULL, 'b');
-	setNode(&node20, &node15, &node30, 'b');
-	setNode(&node10, &node5, &node20, 'b');
+    setNode(&node5, NULL, NULL, 'b');
+    setNode(&node17, NULL, NULL, 'b');
+    setNode(&node15, NULL, &node17, 'b');
+    setNode(&node30, NULL, NULL, 'b');
+    setNode(&node20, &node15, &node30, 'b');
+    setNode(&node10, &node5, &node20, 'b');
     Node *root = &node10;
 
     rightLeftRotate(&root);
