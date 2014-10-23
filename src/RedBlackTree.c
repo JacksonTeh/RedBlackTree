@@ -3,6 +3,9 @@
 #include "Rotations.h"
 #include "ErrorCode.h"
 
+void _addRedBlackTree(Node **rootPtr, Node *newNode);
+Node *_delRedBlackTree(Node **rootPtr, Node *delNode);
+
 void addRedBlackTree(Node **rootPtr, Node *newNode)
 {
     _addRedBlackTree(rootPtr, newNode);
@@ -139,4 +142,24 @@ int isNodeRedColour(Node **rootPtr)
     }
 
     return 0;
+}
+
+Node *delRedBlackTree(Node **rootPtr, Node *delNode)
+{
+    Node *node = _delRedBlackTree(rootPtr, delNode);
+    return node;
+}
+
+Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
+{
+    Node *root = *rootPtr;
+    Node *node;
+
+    if(root->data == delNode->data)
+    {
+        *rootPtr = NULL;
+        return delNode;
+    }
+    else
+        Throw(ERR_NODE_UNAVAILABLE);
 }

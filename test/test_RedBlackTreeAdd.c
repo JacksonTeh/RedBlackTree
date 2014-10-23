@@ -324,25 +324,25 @@ void test_addRedBlackTree_add_20_to_use_tree_with_5_10_15_nodes(void)
 /** 4-node case
  * root -> 20(b)                 20(b)  <- root            20(b)  <- root
  *         /   \     add 7       /   \                     /   \
- *      10(r) 25(r) ------->  10(r) 25(r)      ----->    10(r) 25(b)
- *      /   \                 /   \                      /   \
- *    5(r) 15(r)            5(r) 15(r)                 5(b) 15(b)
- *                             \                          \
- *                            7(r)                       7(r)
+ *      10(b) 25(b) ------->  10(b) 25(b)      ----->   10(r) 25(b)
+ *      /   \                 /   \                     /   \
+ *    5(r) 15(r)            5(r) 15(r)                5(b) 15(b)
+ *                             \                         \
+ *                            7(r)                      7(r)
  */
-void xtest_addRedBlackTree_add_7_to_use_tree_with_5_10_15_20_25_nodes(void)
+void test_addRedBlackTree_add_7_to_use_tree_with_5_10_15_20_25_nodes(void)
 {
     setNode(&node7, NULL, NULL, 'r');
     setNode(&node5, NULL, NULL, 'r');
     setNode(&node15, NULL, NULL, 'r');
-    setNode(&node10, &node5, &node15, 'r');
-    setNode(&node25, NULL, NULL, 'r');
+    setNode(&node10, &node5, &node15, 'b');
+    setNode(&node25, NULL, NULL, 'b');
     setNode(&node20, &node10, &node25, 'b');
     Node *root = &node20;
 
-    _addRedBlackTree(&root, &node20);
+    addRedBlackTree(&root, &node7);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(root, &node20);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node7);
     TEST_ASSERT_EQUAL_NODE(NULL, &node7, 'b', &node5);
