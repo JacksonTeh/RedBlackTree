@@ -30,6 +30,12 @@ void _addRedBlackTree(Node **rootPtr, Node *newNode)
         _addRedBlackTree(&root->right, newNode);
         fixChildViolation(&root);
     }
+
+    if(root->left != NULL && root->right != NULL)
+    {
+        if(root->left->colour == 'r' && root->right->colour == 'r')     //indicate 4-nodes
+            fixColourViolation(&root);
+    }
 }
 
 void fixRootViolation(Node **rootPtr)
@@ -102,6 +108,18 @@ void fixChildViolation(Node **rootPtr)
             else
                 leftRotate(&root);
         }
+    }
+}
+
+void fixColourViolation(Node **rootPtr)
+{
+    Node *root = *rootPtr;
+
+    if(root->left->left != NULL || root->left->right != NULL || root->right->left != NULL || root->right->right != NULL)
+    {
+        root->left->colour = 'b';
+        root->right->colour = 'b';
+        root->colour = 'r';
     }
 }
 
