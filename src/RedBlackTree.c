@@ -147,6 +147,13 @@ int isNodeRedColour(Node **rootPtr)
 Node *delRedBlackTree(Node **rootPtr, Node *delNode)
 {
     Node *node = _delRedBlackTree(rootPtr, delNode);
+
+    if((*rootPtr) != NULL)
+    {
+        fixRootViolation(&(*rootPtr));
+        (*rootPtr)->colour = 'b';
+    }
+
     return node;
 }
 
@@ -155,11 +162,22 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
     Node *root = *rootPtr;
     Node *node;
 
+    if(root == NULL)
+        Throw(ERR_NODE_UNAVAILABLE);
+
     if(root->data == delNode->data)
     {
         *rootPtr = NULL;
         return delNode;
     }
-    else
-        Throw(ERR_NODE_UNAVAILABLE);
+    else if(root->data <= delNode->data)
+    {
+        node = _delRedBlackTree(&root->right, delNode);
+    }
+    else if(root->data >= delNode->data)
+    {
+        node = _delRedBlackTree(&root->left, delNode);
+    }
+
+    return node;
 }
