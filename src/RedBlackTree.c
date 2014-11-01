@@ -149,10 +149,7 @@ Node *delRedBlackTree(Node **rootPtr, Node *delNode)
     Node *node = _delRedBlackTree(rootPtr, delNode);
 
     if((*rootPtr) != NULL)
-    {
-        fixRootViolation(&(*rootPtr));
         (*rootPtr)->colour = 'b';
-    }
 
     return node;
 }
@@ -168,15 +165,46 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
     if(root->data == delNode->data)
     {
         *rootPtr = NULL;
-        return delNode;
+        return root;
     }
     else if(root->data <= delNode->data)
-    {
         node = _delRedBlackTree(&root->right, delNode);
-    }
     else if(root->data >= delNode->data)
-    {
         node = _delRedBlackTree(&root->left, delNode);
+
+    if(root != NULL)
+    {
+        if(root->left == NULL && root->right != NULL)
+        {
+            if(root->right->left != NULL || root->right->right != NULL)
+            {
+                leftRotate(&(*rootPtr));
+                (*rootPtr)->left->right->colour = 'r';
+            }
+            
+            if(root->colour == 'r')
+            {
+                // printf("yes\n");
+                if(root->left != NULL)
+                    (*rootPtr)->left->colour = 'r';
+                else if(root->right != NULL)
+                    (*rootPtr)->right->colour = 'r';
+
+                (*rootPtr)->colour = 'b';
+            }
+        }
+        else if(root->left != NULL && root->right == NULL)
+        {
+            if(root->colour == 'r')
+            {
+                if(root->left != NULL)
+                    (*rootPtr)->left->colour = 'r';
+                else if(root->right != NULL)
+                    (*rootPtr)->right->colour = 'r';
+
+                (*rootPtr)->colour = 'b';
+            }
+        }
     }
 
     return node;
