@@ -181,7 +181,7 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
                 leftRotate(&(*rootPtr));
                 (*rootPtr)->left->right->colour = 'r';
             }
-            
+
             if(root->colour == 'r')
             {
                 // printf("yes\n");
@@ -195,6 +195,12 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
         }
         else if(root->left != NULL && root->right == NULL)
         {
+            if(root->left->left != NULL || root->left->right != NULL)
+            {
+                rightRotate(&(*rootPtr));
+                (*rootPtr)->right->left->colour = 'r';
+            }
+
             if(root->colour == 'r')
             {
                 if(root->left != NULL)

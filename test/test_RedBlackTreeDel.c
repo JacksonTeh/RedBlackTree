@@ -178,6 +178,84 @@ void test_delRedBlackTree_remove_20_from_tree_with_5_10_13_15_20_nodes(void)
     TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'b', &node10);
 }
 
+/** 3-node case
+ * root -> 10(b)                   10(b) <- root
+ *        /    \      remove 1    /    \
+ *      5(r)  15(b) ----------> 5(b)  15(b)
+ *     /   \                       \
+ *    1(b) 7(b)                   7(r)
+ */
+void test_delRedBlackTree_remove_1_from_tree_with_1_5_7_10_15_nodes(void)
+{
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node7, NULL, NULL, 'b');
+    setNode(&node5, &node1, &node7, 'r');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
+    Node *root = &node10, *node;
+
+    node = delRedBlackTree(&root, &node1);
+
+    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(node, &node1);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node7);
+    TEST_ASSERT_EQUAL_NODE(NULL, &node7, 'b', &node5);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node15);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'b', &node10);
+}
+
+/** 3-node case
+ * root -> 10(b)                     10(b) <- root
+ *        /    \      remove 7      /    \
+ *      5(r)  15(b) ---------->   5(b)  15(b)
+ *     /   \                     /
+ *    1(b) 7(b)                1(r)
+ */
+void test_delRedBlackTree_remove_7_from_tree_with_1_5_7_10_15_nodes(void)
+{
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node7, NULL, NULL, 'b');
+    setNode(&node5, &node1, &node7, 'r');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
+    Node *root = &node10, *node;
+
+    node = delRedBlackTree(&root, &node7);
+
+    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(node, &node7);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node1);
+    TEST_ASSERT_EQUAL_NODE(&node1, NULL, 'b', &node5);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node15);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'b', &node10);
+}
+
+/** 3-node case
+ * root -> 10(b)                     10(b) <- root                 5(b)  <- root
+ *        /    \     remove 15      /                            /     \
+ *      5(r)  15(b) ---------->   5(b)             ----------> 1(b)   10(b)
+ *     /   \                     /   \                               /
+ *    1(b) 7(b)                1(b) 7(b)                           7(r)
+ */
+void test_delRedBlackTree_remove_15_from_tree_with_1_5_7_10_15_nodes(void)
+{
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node7, NULL, NULL, 'b');
+    setNode(&node5, &node1, &node7, 'r');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
+    Node *root = &node10, *node;
+
+    node = delRedBlackTree(&root, &node15);
+
+    TEST_ASSERT_EQUAL_PTR(root, &node5);
+    TEST_ASSERT_EQUAL_PTR(node, &node15);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node1);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node7);
+    TEST_ASSERT_EQUAL_NODE(&node7, NULL, 'b', &node10);
+    TEST_ASSERT_EQUAL_NODE(&node1, &node10, 'b', &node5);
+}
+
 /** 4-node case
  * root -> 10(b)    remove 5   10(b) <- root
  *        /    \   --------->      \
