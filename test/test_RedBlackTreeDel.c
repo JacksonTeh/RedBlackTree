@@ -426,7 +426,7 @@ void xtest_delRedBlackTree_remove_20_from_tree_with_1_5_7_10_13_15_20_nodes(void
  *            \                        \ 
  *           20(r)                    20(r)
  */
-void test_delRedBlackTree_remove_5_from_tree_with_5_10_15_20_nodes(void)
+void test_delRedBlackTree_remove_5_from_tree_with_5_10_15_20_nodes_with_case_1(void)
 {
     setNode(&node5, NULL, NULL, 'b');
     setNode(&node20, NULL, NULL, 'r');
@@ -454,7 +454,7 @@ void test_delRedBlackTree_remove_5_from_tree_with_5_10_15_20_nodes(void)
  *        /                        / 
  *     13(r)                    13(r)
  */
-void test_delRedBlackTree_remove_5_from_tree_with_5_10_13_15_nodes(void)
+void test_delRedBlackTree_remove_5_from_tree_with_5_10_13_15_nodes_with_case_1(void)
 {
     setNode(&node5, NULL, NULL, 'b');
     setNode(&node13, NULL, NULL, 'r');
@@ -480,7 +480,7 @@ void test_delRedBlackTree_remove_5_from_tree_with_5_10_13_15_nodes(void)
  *    /    \      remove 5          \
  *  5(b)  15(b)  ---------->       15(r)
  */
-void test_delRedBlackTree_remove_5_from_tree_with_5_10_15_nodes(void)
+void test_delRedBlackTree_remove_5_from_tree_with_5_10_15_nodes_with_case_2(void)
 {
     setNode(&node5, NULL, NULL, 'b');
     setNode(&node15, NULL, NULL, 'b');
@@ -504,7 +504,7 @@ void test_delRedBlackTree_remove_5_from_tree_with_5_10_15_nodes(void)
  *    /    \      remove 5          \
  *  5(b)  15(b)  ---------->       15(r)
  */
-void test_delRedBlackTree_remove_5_from_tree_with_red_node_10_and_5_15_nodes(void)
+void test_delRedBlackTree_remove_5_from_tree_with_red_node_10_and_5_15_nodes_with_case_2(void)
 {
     setNode(&node5, NULL, NULL, 'b');
     setNode(&node15, NULL, NULL, 'b');
@@ -529,7 +529,7 @@ void test_delRedBlackTree_remove_5_from_tree_with_red_node_10_and_5_15_nodes(voi
  *            /   \                    /   \                //  \                         \
  *         13(b) 20(b)              13(b) 20(b)           NULL 13(b)                     13(r)
  */
-void test_delRedBlackTree_remove_5_from_tree_with_5_10_13_15_20_nodes(void)
+void test_delRedBlackTree_remove_5_from_tree_with_5_10_13_15_20_nodes_with_case_3(void)
 {
     setNode(&node5, NULL, NULL, 'b');
     setNode(&node13, NULL, NULL, 'b');
@@ -560,7 +560,7 @@ void test_delRedBlackTree_remove_5_from_tree_with_5_10_13_15_20_nodes(void)
  *         \                        \                          \
  *        14(r)                    14(r)                      14(r)
  */
-void test_delRedBlackTree_remove_5_from_tree_with_5_10_13_14_15_20_nodes(void)
+void test_delRedBlackTree_remove_5_from_tree_with_5_10_13_14_15_20_nodes_with_case_3(void)
 {
     setNode(&node5, NULL, NULL, 'b');
     setNode(&node14, NULL, NULL, 'r');

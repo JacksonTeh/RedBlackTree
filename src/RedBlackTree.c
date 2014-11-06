@@ -180,7 +180,6 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
             restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr));
         else if(checkCases((*rootPtr)->right) == 3)
             restructureRightRedChild(&(*rootPtr));
-            // printf("yes\n");
     }
 
     return node;
@@ -264,9 +263,8 @@ void restructureRightRedChild(Node **rootPtr)
     if(isDoubleBlack((*rootPtr)->left->left))
     {
         if(checkCases((*rootPtr)->left->right) == 1)
-            // printf("yes");
             restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr)->left);
-        if(checkCases((*rootPtr)->left->right) == 2)
+        else if(checkCases((*rootPtr)->left->right) == 2)
             restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr)->left);
     }
 }
