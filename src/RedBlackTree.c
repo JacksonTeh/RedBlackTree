@@ -4,7 +4,7 @@
 #include "ErrorCode.h"
 
 void _addRedBlackTree(Node **rootPtr, Node *newNode);
-Node *_delRedBlackTree(Node **rootPtr, Node *delNode);
+Node *_delRedBlackTreeX(Node **rootPtr, Node *delNode);
 
 void addRedBlackTree(Node **rootPtr, Node *newNode)
 {
@@ -167,9 +167,136 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
         *rootPtr = NULL;
         return root;
     }
-    else if(root->data <= delNode->data)
+    else if(root->data < delNode->data)
         node = _delRedBlackTree(&root->right, delNode);
-    else if(root->data >= delNode->data)
+    else if(root->data > delNode->data)
+        node = _delRedBlackTree(&root->left, delNode);
+
+    if(isDoubleBlack((*rootPtr)->left))         //left side case
+    {
+        if(checkCases((*rootPtr)->right) == 1)
+            restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr));
+        else if(checkCases((*rootPtr)->right) == 2)
+            restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr));
+        else if(checkCases((*rootPtr)->right) == 3)
+            restructureRightRedChild(&(*rootPtr));
+            // printf("yes\n");
+    }
+
+    return node;
+}
+
+int isRed(Node *rootPtr)
+{
+    if(rootPtr == NULL)
+        return 0;
+    else if(rootPtr->colour == 'r')
+        return 1;
+}
+
+int isBlack(Node *rootPtr)
+{
+    if(rootPtr == NULL || rootPtr->colour == 'b')
+        return 1;
+    else
+        return 0;
+}
+
+int isDoubleBlack(Node *rootPtr)
+{
+    if(rootPtr == NULL || rootPtr->colour == 'd')
+        return 1;
+    else
+        return 0;
+}
+
+/**
+ * To check which cases should be for the RBT
+ *
+ * Input:
+ *      rootPtr
+ *
+ * Return
+ *      1
+ *      2
+ *      3
+ */
+int checkCases(Node *rootPtr)
+{
+    if(isBlack(rootPtr) && (isRed(rootPtr->left) || isRed(rootPtr->right)))             //case 1
+        return 1;
+    else if(isBlack(rootPtr) && (isBlack(rootPtr->left) || isBlack(rootPtr->right)))    //case 2
+        return 2;
+    else if(isRed(rootPtr))                                                             //case 3
+        return 3;
+}
+
+void restructureRightBlackChildWithOneRedGrandchild(Node **rootPtr)
+{
+    Node *rightChild = (*rootPtr)->right;
+
+    if(isRed(rightChild->right))
+        leftRotate(&(*rootPtr));
+    else if(isRed(rightChild->left))
+        rightLeftRotate(&(*rootPtr));
+
+    (*rootPtr)->colour = (*rootPtr)->left->colour;
+    (*rootPtr)->left->colour = 'b';
+    (*rootPtr)->right->colour = 'b';
+}
+
+void restructureRightBlackChildWithBothBlackGrandchild(Node **rootPtr)
+{
+    if((*rootPtr)->colour == 'r')
+        (*rootPtr)->colour = 'b';
+    else
+        (*rootPtr)->colour = 'd';
+
+    (*rootPtr)->right->colour = 'r';
+}
+
+void restructureRightRedChild(Node **rootPtr)
+{
+    leftRotate(&(*rootPtr));
+
+    (*rootPtr)->left->colour = 'r';
+
+    if(isDoubleBlack((*rootPtr)->left->left))
+    {
+        if(checkCases((*rootPtr)->left->right) == 1)
+            // printf("yes");
+            restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr)->left);
+        if(checkCases((*rootPtr)->left->right) == 2)
+            restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr)->left);
+    }
+}
+
+Node *delRedBlackTreeX(Node **rootPtr, Node *delNode)
+{
+    Node *node = _delRedBlackTree(rootPtr, delNode);
+
+    if((*rootPtr) != NULL)
+        (*rootPtr)->colour = 'b';
+
+    return node;
+}
+
+Node *_delRedBlackTreeX(Node **rootPtr, Node *delNode)
+{
+    Node *root = *rootPtr;
+    Node *node;
+
+    if(root == NULL)
+        Throw(ERR_NODE_UNAVAILABLE);
+
+    if(root->data == delNode->data)
+    {
+        *rootPtr = NULL;
+        return root;
+    }
+    else if(root->data < delNode->data)
+        node = _delRedBlackTree(&root->right, delNode);
+    else if(root->data > delNode->data)
         node = _delRedBlackTree(&root->left, delNode);
 
     if(root != NULL)

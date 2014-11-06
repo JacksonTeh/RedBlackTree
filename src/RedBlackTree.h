@@ -5,9 +5,20 @@
 
 void addRedBlackTree(Node **rootPtr, Node *newNode);
 Node *delRedBlackTree(Node **rootPtr, Node *delNode);
+Node *_delRedBlackTree(Node **rootPtr, Node *delNode);
+Node *delRedBlackTreeX(Node **rootPtr, Node *delNode);
+
 void fixRootViolation(Node **rootPtr);
 void fixChildViolation(Node **rootPtr);
 void fixColourViolation(Node **rootPtr);
 int isNodeRedColour(Node **rootPtr);
+
+int isRed(Node *rootPtr);
+int isBlack(Node *rootPtr);
+int isDoubleBlack(Node *rootPtr);
+int checkCases(Node *rootPtr);
+void restructureRightBlackChildWithOneRedGrandchild(Node **rootPtr);
+void restructureRightBlackChildWithBothBlackGrandchild(Node **rootPtr);
+void restructureRightRedChild(Node **rootPtr);
 
 #endif // RedBlackTree_H
