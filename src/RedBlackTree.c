@@ -172,24 +172,27 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
     else if(root->data > delNode->data)
         node = _delRedBlackTree(&root->left, delNode);
 
-    if(isDoubleBlack((*rootPtr)->left))         //left side case
+    if((*rootPtr)->left != NULL || (*rootPtr)->right != NULL)
     {
-        if(checkCases((*rootPtr)->right) == 1)
-            restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr));
-        else if(checkCases((*rootPtr)->right) == 2)
-            restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr));
-        else if(checkCases((*rootPtr)->right) == 3)
-            restructureRightRedChild(&(*rootPtr));
-    }
-    else if(isDoubleBlack((*rootPtr)->right))   //right side case
-    {
-        if(checkCases((*rootPtr)->left) == 1)
-            restructureLeftBlackChildWithOneRedGrandchild(&(*rootPtr));
-        else if(checkCases((*rootPtr)->left) == 2)
-            restructureLeftBlackChildWithBothBlackGrandchild(&(*rootPtr));
-        else if(checkCases((*rootPtr)->left) == 3)
-            restructureLeftRedChild(&(*rootPtr));
-            // printf("yes\n");
+        if(isDoubleBlack((*rootPtr)->left))         //left side case
+        {
+            if(checkCases((*rootPtr)->right) == 1)
+                restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr));
+            else if(checkCases((*rootPtr)->right) == 2)
+                restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr));
+            else if(checkCases((*rootPtr)->right) == 3)
+                restructureRightRedChild(&(*rootPtr));
+        }
+        else if(isDoubleBlack((*rootPtr)->right))   //right side case
+        {
+            if(checkCases((*rootPtr)->left) == 1)
+                restructureLeftBlackChildWithOneRedGrandchild(&(*rootPtr));
+            else if(checkCases((*rootPtr)->left) == 2)
+                restructureLeftBlackChildWithBothBlackGrandchild(&(*rootPtr));
+            else if(checkCases((*rootPtr)->left) == 3)
+                restructureLeftRedChild(&(*rootPtr));
+                // printf("yes\n");
+        }
     }
 
     return node;
@@ -223,12 +226,14 @@ int isDoubleBlack(Node *rootPtr)
  * To check which cases should be for the RBT
  *
  * Input:
- *      rootPtr
+ *      rootPtr     is pointer to Node
  *
  * Return
- *      1
- *      2
- *      3
+ *      1           indicate case: (1a) The sibling is black and it has a red nephew
+                                   (1b) The sibling is black and it has a red nephew
+ *      2           indicate case: (2a) The sibling is black and both nephew are black
+                                   (2b) The sibling is black and both nephew are black
+ *      3           indicate case: (3) The sibling is red
  */
 int checkCases(Node *rootPtr)
 {
@@ -237,7 +242,12 @@ int checkCases(Node *rootPtr)
     else if(isBlack(rootPtr) && (isBlack(rootPtr->left) || isBlack(rootPtr->right)))    //case 2
         return 2;
     else if(isRed(rootPtr))                                                             //case 3
+    {
+        if(rootPtr->left == NULL && rootPtr->right == NULL)
+            return 0;
+
         return 3;
+    }
 }
 
 void restructureRightBlackChildWithOneRedGrandchild(Node **rootPtr)
@@ -312,7 +322,7 @@ void restructureLeftRedChild(Node **rootPtr)
     if(isDoubleBlack((*rootPtr)->right->right))
     {
         if(checkCases((*rootPtr)->right->left) == 1)
-            restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr)->right);
+            restructureLeftBlackChildWithOneRedGrandchild(&(*rootPtr)->right);
         else if(checkCases((*rootPtr)->right->left) == 2)
             restructureLeftBlackChildWithBothBlackGrandchild(&(*rootPtr)->right);
     }
