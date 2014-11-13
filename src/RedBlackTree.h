@@ -26,4 +26,6 @@ void restructureLeftBlackChildWithBothBlackGrandchild(Node **rootPtr);
 void restructureRightRedChild(Node **rootPtr, Node *removeNode);
 void restructureLeftRedChild(Node **rootPtr, Node *removeNode);
 
+Node *removeNextLargerSuccessor(Node **parentPtr);
+
 #endif // RedBlackTree_H

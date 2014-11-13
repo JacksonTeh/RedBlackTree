@@ -331,6 +331,20 @@ void restructureLeftRedChild(Node **rootPtr, Node *removeNode)
     }
 }
 
+Node *removeNextLargerSuccessor(Node **parentPtr)
+{
+    Node *removeNode;
+
+    if((*parentPtr)->left != NULL)
+        removeNode = removeNextLargerSuccessor(&(*parentPtr)->left);
+    else
+    {
+        removeNode = *parentPtr;
+        *parentPtr = NULL;
+    }
+
+    return removeNode;
+}
 
 
 

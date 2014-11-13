@@ -724,3 +724,37 @@ void test_delRedBlackTree_remove_15_from_tree_with_1_5_6_7_10_15_nodes_with_case
     TEST_ASSERT_EQUAL_NODE(&node6, &node10, 'r', &node7);
     TEST_ASSERT_EQUAL_NODE(&node1, &node7, 'b', &node5);
 }
+
+/**
+ *  parent's left              parent's left
+ *     /         successor 5      /
+ *  10(r)       ------------>   NULL
+ */
+void test_removeNextLargerSuccessor_given_5_10_nodes_should_remove_successor_5(void)
+{
+    setNode(&node10, NULL, NULL, 'r');
+    Node *parent = &node10, *removeNode;
+
+    removeNode = removeNextLargerSuccessor(&parent);
+
+    TEST_ASSERT_EQUAL_PTR(parent, NULL);
+    TEST_ASSERT_EQUAL_PTR(removeNode, &node10);
+}
+
+/**
+ *   parent's left              parent's left
+ *      /         successor 5     /
+ *   10(r)       ------------>  15(b)
+ *       \
+ *      15(r)
+ */
+void xtest_removeNextLargerSuccessor_given_10_15_nodes_should_remove_successor_10(void)
+{
+    setNode(&node10, NULL, NULL, 'r');
+    Node *parent = &node10, *removeNode;
+
+    removeNode = removeNextLargerSuccessor(&parent);
+
+    TEST_ASSERT_EQUAL_PTR(parent, NULL);
+    TEST_ASSERT_EQUAL_PTR(removeNode, &node10);
+}
