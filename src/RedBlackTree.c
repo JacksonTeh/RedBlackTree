@@ -351,8 +351,9 @@ Node *removeNextLargerSuccessor(Node **parentPtr)
     {
         removeNode = *parentPtr;
         *parentPtr = NULL;
+        return removeNode;
     }
-    else 
+    else
     {
         if((*parentPtr)->left != NULL)
             removeNode = removeNextLargerSuccessor(&(*parentPtr)->left);
@@ -361,10 +362,12 @@ Node *removeNextLargerSuccessor(Node **parentPtr)
             removeNode = *parentPtr;
             *parentPtr = (*parentPtr)->right;
             (*parentPtr)->colour = 'b';
+            return removeNode;
         }
     }
-
-    return removeNode;
+    
+    if(*parentPtr != NULL)
+        (*parentPtr)->colour = 'd';
 }
 
 ////////////////////////////////////////////////////
