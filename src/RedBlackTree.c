@@ -6,6 +6,11 @@
 void _addRedBlackTree(Node **rootPtr, Node *newNode);
 Node *_delRedBlackTreeX(Node **rootPtr, Node *delNode);
 
+/**
+ *
+ * Add node to Red Black Tree
+ *
+ */
 void addRedBlackTree(Node **rootPtr, Node *newNode)
 {
     _addRedBlackTree(rootPtr, newNode);
@@ -144,6 +149,11 @@ int isNodeRedColour(Node **rootPtr)
     return 0;
 }
 
+/**
+ *
+ * Delete node from Red Black Tree
+ *
+ */
 Node *delRedBlackTree(Node **rootPtr, Node *delNode)
 {
     Node *node = _delRedBlackTree(rootPtr, delNode);
@@ -216,10 +226,7 @@ int isBlack(Node *rootPtr)
 
 int isDoubleBlack(Node *rootPtr, Node *removeNode)
 {
-    if(removeNode->colour == 'r')
-        return 0;
-
-    if(rootPtr == NULL || rootPtr->colour == 'd')
+    if((rootPtr == NULL || rootPtr->colour == 'd') && removeNode->colour == 'b')
         return 1;
     else
         return 0;
@@ -331,25 +338,40 @@ void restructureLeftRedChild(Node **rootPtr, Node *removeNode)
     }
 }
 
+/**
+ *
+ * Remove the next larger successor node from Red Black Tree
+ *
+ */
 Node *removeNextLargerSuccessor(Node **parentPtr)
 {
     Node *removeNode;
 
-    if((*parentPtr)->left != NULL)
-        removeNode = removeNextLargerSuccessor(&(*parentPtr)->left);
-    else
+    if((*parentPtr)->left == NULL && (*parentPtr)->right == NULL)
     {
         removeNode = *parentPtr;
         *parentPtr = NULL;
+    }
+    else 
+    {
+        if((*parentPtr)->left != NULL)
+            removeNode = removeNextLargerSuccessor(&(*parentPtr)->left);
+        else
+        {
+            removeNode = *parentPtr;
+            *parentPtr = (*parentPtr)->right;
+            (*parentPtr)->colour = 'b';
+        }
     }
 
     return removeNode;
 }
 
-
-
-
-
+////////////////////////////////////////////////////
+//                                                //
+//           Old delete node code                 //
+//                                                //
+////////////////////////////////////////////////////
 Node *delRedBlackTreeX(Node **rootPtr, Node *delNode)
 {
     Node *node = _delRedBlackTree(rootPtr, delNode);
