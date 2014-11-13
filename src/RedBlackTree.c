@@ -174,23 +174,23 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
 
     if((*rootPtr)->left != NULL || (*rootPtr)->right != NULL)
     {
-        if(isDoubleBlack((*rootPtr)->left))         //left side case
+        if(isDoubleBlack((*rootPtr)->left, node))           //left side case
         {
             if(checkCases((*rootPtr)->right) == 1)
                 restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr));
             else if(checkCases((*rootPtr)->right) == 2)
                 restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr));
             else if(checkCases((*rootPtr)->right) == 3)
-                restructureRightRedChild(&(*rootPtr));
+                restructureRightRedChild(&(*rootPtr), node);
         }
-        else if(isDoubleBlack((*rootPtr)->right))   //right side case
+        else if(isDoubleBlack((*rootPtr)->right, node))     //right side case
         {
             if(checkCases((*rootPtr)->left) == 1)
                 restructureLeftBlackChildWithOneRedGrandchild(&(*rootPtr));
             else if(checkCases((*rootPtr)->left) == 2)
                 restructureLeftBlackChildWithBothBlackGrandchild(&(*rootPtr));
             else if(checkCases((*rootPtr)->left) == 3)
-                restructureLeftRedChild(&(*rootPtr));
+                restructureLeftRedChild(&(*rootPtr), node);
                 // printf("yes\n");
         }
     }
@@ -214,8 +214,11 @@ int isBlack(Node *rootPtr)
         return 0;
 }
 
-int isDoubleBlack(Node *rootPtr)
+int isDoubleBlack(Node *rootPtr, Node *removeNode)
 {
+    if(removeNode->colour == 'r')
+        return 0;
+
     if(rootPtr == NULL || rootPtr->colour == 'd')
         return 1;
     else
@@ -298,13 +301,13 @@ void restructureLeftBlackChildWithBothBlackGrandchild(Node **rootPtr)
     (*rootPtr)->left->colour = 'r';
 }
 
-void restructureRightRedChild(Node **rootPtr)
+void restructureRightRedChild(Node **rootPtr, Node *removeNode)
 {
     leftRotate(&(*rootPtr));
 
     (*rootPtr)->left->colour = 'r';
 
-    if(isDoubleBlack((*rootPtr)->left->left))
+    if(isDoubleBlack((*rootPtr)->left->left, removeNode))
     {
         if(checkCases((*rootPtr)->left->right) == 1)
             restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr)->left);
@@ -313,13 +316,13 @@ void restructureRightRedChild(Node **rootPtr)
     }
 }
 
-void restructureLeftRedChild(Node **rootPtr)
+void restructureLeftRedChild(Node **rootPtr, Node *removeNode)
 {
     rightRotate(&(*rootPtr));
 
     (*rootPtr)->right->colour = 'r';
 
-    if(isDoubleBlack((*rootPtr)->right->right))
+    if(isDoubleBlack((*rootPtr)->right->right, removeNode))
     {
         if(checkCases((*rootPtr)->right->left) == 1)
             restructureLeftBlackChildWithOneRedGrandchild(&(*rootPtr)->right);
@@ -327,6 +330,11 @@ void restructureLeftRedChild(Node **rootPtr)
             restructureLeftBlackChildWithBothBlackGrandchild(&(*rootPtr)->right);
     }
 }
+
+
+
+
+
 
 Node *delRedBlackTreeX(Node **rootPtr, Node *delNode)
 {

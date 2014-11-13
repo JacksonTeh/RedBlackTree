@@ -15,7 +15,7 @@ int isNodeRedColour(Node **rootPtr);
 
 int isRed(Node *rootPtr);
 int isBlack(Node *rootPtr);
-int isDoubleBlack(Node *rootPtr);
+int isDoubleBlack(Node *rootPtr, Node *removeNode);
 
 int checkCases(Node *rootPtr);
 
@@ -23,7 +23,7 @@ void restructureRightBlackChildWithOneRedGrandchild(Node **rootPtr);
 void restructureLeftBlackChildWithOneRedGrandchild(Node **rootPtr);
 void restructureRightBlackChildWithBothBlackGrandchild(Node **rootPtr);
 void restructureLeftBlackChildWithBothBlackGrandchild(Node **rootPtr);
-void restructureRightRedChild(Node **rootPtr);
-void restructureLeftRedChild(Node **rootPtr);
+void restructureRightRedChild(Node **rootPtr, Node *removeNode);
+void restructureLeftRedChild(Node **rootPtr, Node *removeNode);
 
 #endif // RedBlackTree_H
