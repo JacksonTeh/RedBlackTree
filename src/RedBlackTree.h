@@ -17,6 +17,7 @@ int isRed(Node *rootPtr);
 int isBlack(Node *rootPtr);
 int isDoubleBlack(Node *rootPtr, Node *removeNode);
 
+void selectCases(Node **rootPtr, Node *removeNode);
 int checkCases(Node *rootPtr);
 
 void restructureRightBlackChildWithOneRedGrandchild(Node **rootPtr);

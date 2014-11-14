@@ -182,28 +182,7 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
     else if(root->data > delNode->data)
         node = _delRedBlackTree(&root->left, delNode);
 
-    if((*rootPtr)->left != NULL || (*rootPtr)->right != NULL)
-    {
-        if(isDoubleBlack((*rootPtr)->left, node))           //left side case
-        {
-            if(checkCases((*rootPtr)->right) == 1)
-                restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr));
-            else if(checkCases((*rootPtr)->right) == 2)
-                restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr));
-            else if(checkCases((*rootPtr)->right) == 3)
-                restructureRightRedChild(&(*rootPtr), node);
-        }
-        else if(isDoubleBlack((*rootPtr)->right, node))     //right side case
-        {
-            if(checkCases((*rootPtr)->left) == 1)
-                restructureLeftBlackChildWithOneRedGrandchild(&(*rootPtr));
-            else if(checkCases((*rootPtr)->left) == 2)
-                restructureLeftBlackChildWithBothBlackGrandchild(&(*rootPtr));
-            else if(checkCases((*rootPtr)->left) == 3)
-                restructureLeftRedChild(&(*rootPtr), node);
-                // printf("yes\n");
-        }
-    }
+    selectCases(&(*rootPtr), node);
 
     return node;
 }
@@ -230,6 +209,32 @@ int isDoubleBlack(Node *rootPtr, Node *removeNode)
         return 1;
     else
         return 0;
+}
+
+void selectCases(Node **rootPtr, Node *removeNode)
+{
+    if((*rootPtr)->left != NULL || (*rootPtr)->right != NULL)
+    {
+        if(isDoubleBlack((*rootPtr)->left, removeNode))           //left side case
+        {
+            if(checkCases((*rootPtr)->right) == 1)
+                restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr));
+            else if(checkCases((*rootPtr)->right) == 2)
+                restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr));
+            else if(checkCases((*rootPtr)->right) == 3)
+                restructureRightRedChild(&(*rootPtr), removeNode);
+        }
+        else if(isDoubleBlack((*rootPtr)->right, removeNode))     //right side case
+        {
+            if(checkCases((*rootPtr)->left) == 1)
+                restructureLeftBlackChildWithOneRedGrandchild(&(*rootPtr));
+            else if(checkCases((*rootPtr)->left) == 2)
+                restructureLeftBlackChildWithBothBlackGrandchild(&(*rootPtr));
+            else if(checkCases((*rootPtr)->left) == 3)
+                restructureLeftRedChild(&(*rootPtr), removeNode);
+                // printf("yes\n");
+        }
+    }
 }
 
 /**
@@ -365,7 +370,7 @@ Node *removeNextLargerSuccessor(Node **parentPtr)
             return removeNode;
         }
     }
-    
+
     if(*parentPtr != NULL)
         (*parentPtr)->colour = 'd';
 }
