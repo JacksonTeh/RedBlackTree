@@ -63,7 +63,7 @@ void test_addRedBlackTree_add_5_to_use_tree_with_only_root_10(void)
 
     addRedBlackTree(&root, &node5);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(&node10, root);
     //                      left  right colour  node
     TEST_ASSERT_EQUAL_NODE(&node5, NULL, 'b', &node10);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node5);
@@ -83,7 +83,7 @@ void test_addRedBlackTree_add_15_to_use_tree_with_only_root_10(void)
 
     addRedBlackTree(&root, &node15);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(&node10, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, &node15, 'b', &node10);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node15);
@@ -105,7 +105,7 @@ void test_addRedBlackTree_add_1_to_use_tree_with_root_10(void)
 
     addRedBlackTree(&root, &node1);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node5);
+    TEST_ASSERT_EQUAL_PTR(&node5, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node10);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node1);
@@ -128,7 +128,7 @@ void test_addRedBlackTree_add_7_to_use_tree_with_root_10(void)
 
     addRedBlackTree(&root, &node7);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node7);
+    TEST_ASSERT_EQUAL_PTR(&node7, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node10);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node5);
@@ -149,7 +149,7 @@ void test_addRedBlackTree_add_20_to_use_tree_with_root_10(void)
 
     addRedBlackTree(&root, &node20);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(&node10, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node5);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node20);
@@ -172,7 +172,7 @@ void test_addRedBlackTree_add_30_to_use_tree_with_root_10(void)
 
     addRedBlackTree(&root, &node30);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node20);
+    TEST_ASSERT_EQUAL_PTR(&node20, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node10);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node30);
@@ -195,7 +195,7 @@ void test_addRedBlackTree_add_15_to_use_tree_with_root_10(void)
 
     addRedBlackTree(&root, &node15);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node15);
+    TEST_ASSERT_EQUAL_PTR(&node15, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node10);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node20);
@@ -216,7 +216,7 @@ void test_addRedBlackTree_add_5_to_use_tree_with_root_10(void)
 
     addRedBlackTree(&root, &node5);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(&node10, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node5);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node20);
@@ -240,7 +240,7 @@ void test_addRedBlackTree_add_1_to_use_tree_with_5_10_15_nodes(void)
 
     _addRedBlackTree(&root, &node1);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(&node10, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node1);
     TEST_ASSERT_EQUAL_NODE(&node1, NULL, 'b', &node5);
@@ -265,7 +265,7 @@ void test_addRedBlackTree_add_7_to_use_tree_with_5_10_15_nodes(void)
 
     _addRedBlackTree(&root, &node7);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(&node10, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node7);
     TEST_ASSERT_EQUAL_NODE(NULL, &node7, 'b', &node5);
@@ -290,7 +290,7 @@ void test_addRedBlackTree_add_13_to_use_tree_with_5_10_15_nodes(void)
 
     _addRedBlackTree(&root, &node13);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(&node10, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node13);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node5);
@@ -315,7 +315,7 @@ void test_addRedBlackTree_add_20_to_use_tree_with_5_10_15_nodes(void)
 
     _addRedBlackTree(&root, &node20);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node10);
+    TEST_ASSERT_EQUAL_PTR(&node10, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node20);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node5);
@@ -344,7 +344,7 @@ void test_addRedBlackTree_add_7_to_use_tree_with_5_10_15_20_25_nodes(void)
 
     addRedBlackTree(&root, &node7);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node20);
+    TEST_ASSERT_EQUAL_PTR(&node20, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node7);
     TEST_ASSERT_EQUAL_NODE(NULL, &node7, 'b', &node5);
@@ -381,7 +381,7 @@ void test_addRedBlackTree_add_7_to_use_tree_with_1_4_5_10_15_20_25_30_40_nodes(v
 
     addRedBlackTree(&root, &node7);
 
-    TEST_ASSERT_EQUAL_PTR(root, &node20);
+    TEST_ASSERT_EQUAL_PTR(&node20, root);
 
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node1);
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node7);

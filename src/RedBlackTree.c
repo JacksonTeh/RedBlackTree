@@ -265,6 +265,7 @@ int checkCases(Node *rootPtr)
     }
 }
 
+//case 1
 void restructureRightBlackChildWithOneRedGrandchild(Node **rootPtr)
 {
     Node *rightChild = (*rootPtr)->right;
@@ -279,6 +280,7 @@ void restructureRightBlackChildWithOneRedGrandchild(Node **rootPtr)
     (*rootPtr)->right->colour = 'b';
 }
 
+//case 1
 void restructureLeftBlackChildWithOneRedGrandchild(Node **rootPtr)
 {
     Node *leftChild = (*rootPtr)->left;
@@ -293,6 +295,7 @@ void restructureLeftBlackChildWithOneRedGrandchild(Node **rootPtr)
     (*rootPtr)->right->colour = 'b';
 }
 
+//case 2
 void restructureRightBlackChildWithBothBlackGrandchild(Node **rootPtr)
 {
     if((*rootPtr)->colour == 'r')
@@ -301,8 +304,10 @@ void restructureRightBlackChildWithBothBlackGrandchild(Node **rootPtr)
         (*rootPtr)->colour = 'd';
 
     (*rootPtr)->right->colour = 'r';
+    printf("(*rootPtr)->right->colour: %c\n", (*rootPtr)->right->colour);
 }
 
+//case 2
 void restructureLeftBlackChildWithBothBlackGrandchild(Node **rootPtr)
 {
     if((*rootPtr)->colour == 'r')
@@ -313,34 +318,31 @@ void restructureLeftBlackChildWithBothBlackGrandchild(Node **rootPtr)
     (*rootPtr)->left->colour = 'r';
 }
 
+//case 3
 void restructureRightRedChild(Node **rootPtr, Node *removeNode)
 {
     leftRotate(&(*rootPtr));
 
     (*rootPtr)->left->colour = 'r';
 
-    if(isDoubleBlack((*rootPtr)->left->left, removeNode))
-    {
-        if(checkCases((*rootPtr)->left->right) == 1)
-            restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr)->left);
-        else if(checkCases((*rootPtr)->left->right) == 2)
-            restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr)->left);
-    }
+    // if(isDoubleBlack((*rootPtr)->left->left, removeNode))
+    // {
+        // if(checkCases((*rootPtr)->left->right) == 1)
+            // restructureRightBlackChildWithOneRedGrandchild(&(*rootPtr)->left);
+        // else if(checkCases((*rootPtr)->left->right) == 2)
+            // restructureRightBlackChildWithBothBlackGrandchild(&(*rootPtr)->left);
+    // }
+    selectCases(&(*rootPtr)->left, removeNode);
 }
 
+//case 3
 void restructureLeftRedChild(Node **rootPtr, Node *removeNode)
 {
     rightRotate(&(*rootPtr));
 
     (*rootPtr)->right->colour = 'r';
 
-    if(isDoubleBlack((*rootPtr)->right->right, removeNode))
-    {
-        if(checkCases((*rootPtr)->right->left) == 1)
-            restructureLeftBlackChildWithOneRedGrandchild(&(*rootPtr)->right);
-        else if(checkCases((*rootPtr)->right->left) == 2)
-            restructureLeftBlackChildWithBothBlackGrandchild(&(*rootPtr)->right);
-    }
+    selectCases(&(*rootPtr)->right, removeNode);
 }
 
 /**
@@ -371,8 +373,17 @@ Node *removeNextLargerSuccessor(Node **parentPtr)
         }
     }
 
-    if(*parentPtr != NULL)
+    if((*parentPtr)->left != NULL)
+        (*parentPtr)->left->colour = 'b';
+
+    selectCases(&(*parentPtr), removeNode);
+    printf("yessss\n");
+
+    if(isBlack(removeNode) && removeNode->right == NULL)
+        // printf("yessss\n");
         (*parentPtr)->colour = 'd';
+
+    return removeNode;
 }
 
 ////////////////////////////////////////////////////
