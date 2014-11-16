@@ -6,7 +6,7 @@
 #include "Rotations.h"
 #include "CException.h"
 
-Node node1, node2, node4, node5, node6, node7, node8, node10, node13, node14, node15, node17, node20, node25, node30;
+Node node1, node2, node4, node5, node6, node7, node8, node10, node13, node14, node15, node17, node20, node25, node30, node40;
 
 void setUp(void)
 {
@@ -25,6 +25,7 @@ void setUp(void)
     resetNode(&node20, 20);
     resetNode(&node25, 25);
     resetNode(&node30, 30);
+    resetNode(&node40, 40);
 }
 
 void tearDown(void)
@@ -766,6 +767,27 @@ void test_removeNextLargerSuccessor_given_10b_nodes_should_remove_successor_10(v
  * parent's left             parent's left
  *      |                         |
  *      v      successor 10       v
+ *    10(b)    ------------>    10(b)
+ *    /
+ *  5(r)
+ */
+void test_removeNextLargerSuccessor_given_5_10_nodes_should_remove_successor_5(void)
+{
+    setNode(&node5, NULL, NULL, 'r');
+    setNode(&node10, &node5, NULL, 'b');
+    Node *parent = &node10, *removeNode;
+
+    removeNode = removeNextLargerSuccessor(&parent);
+
+    TEST_ASSERT_EQUAL_PTR(&node10, parent);
+    TEST_ASSERT_EQUAL_PTR(&node5, removeNode);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node10);
+}
+
+/**
+ * parent's left             parent's left
+ *      |                         |
+ *      v      successor 10       v
  *    10(b)    ------------>    15(b)
  *       \
  *      15(r)
@@ -854,7 +876,7 @@ void test_removeNextLargerSuccessor_given_nodes_1_2_5_10_13_15_20_should_remove_
  *    /   \       /   \                  //  \       /   \                   \       /   \
  *  1(b) 7(b)  13(b) 20(b)             NULL 7(b)  13(b) 20(b)               7(r)  13(b) 20(b)
  */
-void test_removeNextLargerSuccessor_given_nodes_1_5_7_10_13_15r_20_should_remove_successor_1(void)
+void test_removeNextLargerSuccessor_given_nodes_1_5_7_10_13_15_20_should_remove_successor_1(void)
 {
     setNode(&node7, NULL, NULL, 'b');
     setNode(&node13, NULL, NULL, 'b');
@@ -863,6 +885,40 @@ void test_removeNextLargerSuccessor_given_nodes_1_5_7_10_13_15r_20_should_remove
     setNode(&node5, &node1, &node7, 'r');
     setNode(&node15, &node13, &node20, 'r');
     setNode(&node10, &node5, &node15, 'b');
+    Node *parent = &node10, *removeNode;
+
+    removeNode = removeNextLargerSuccessor(&parent);
+
+    TEST_ASSERT_EQUAL_PTR(&node10, parent);
+    TEST_ASSERT_EQUAL_PTR(&node1, removeNode);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node7);
+    TEST_ASSERT_EQUAL_NODE(NULL, &node7, 'b', &node5);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node13);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node20);
+    TEST_ASSERT_EQUAL_NODE(&node13, &node20, 'r', &node15);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'b', &node10);
+}
+
+/** Encounter case 2a on the left child and right child after remove successor
+ *
+ *      parent's left                      parent's left                   parent's left                   parent's left
+ *            |                                  |                               |                               |
+ *            v                                  v                               v                               v
+ *          10(r)                              10(r)                           10(r)                           10(b)
+ *       /         \       successor 1      /         \                     //        \                     /        \
+ *     5(b)       15(b)   ------------>   5(b)       15(b)  ------------> 5(d)       15(b)  ------------> 5(b)       15(r)
+ *    /   \       /   \                  //  \       /   \                   \       /   \                   \       /   \
+ *  1(b) 7(b)  13(b) 20(b)             NULL 7(b)  13(b) 20(b)               7(r)  13(b) 20(b)               7(r)  13(b) 20(b)
+ */
+void test_removeNextLargerSuccessor_given_nodes_1_5_7_10_13_15_20_should_remove_successor_1_with_parent_being_red(void)
+{
+    setNode(&node7, NULL, NULL, 'b');
+    setNode(&node13, NULL, NULL, 'b');
+    setNode(&node20, NULL, NULL, 'b');
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node5, &node1, &node7, 'b');
+    setNode(&node15, &node13, &node20, 'b');
+    setNode(&node10, &node5, &node15, 'r');
     Node *parent = &node10, *removeNode;
 
     removeNode = removeNextLargerSuccessor(&parent);
@@ -888,7 +944,7 @@ void test_removeNextLargerSuccessor_given_nodes_1_5_7_10_13_15r_20_should_remove
  *    /   \       /   \                  //  \       /   \                   \       /   \                   \       /   \
  *  1(b) 7(b)  13(b) 20(b)             NULL 7(b)  13(b) 20(b)               7(r)  13(b) 20(b)               7(r)  13(b) 20(b)
  */
-void test_removeNextLargerSuccessor_given_nodes_1_5_7_10_13_15_20_should_remove_successor_1(void)
+void test_removeNextLargerSuccessor_given_nodes_1_5_7_10_13_15_20_should_remove_successor_1_with_parent_being_black(void)
 {
     setNode(&node7, NULL, NULL, 'b');
     setNode(&node13, NULL, NULL, 'b');
@@ -909,6 +965,44 @@ void test_removeNextLargerSuccessor_given_nodes_1_5_7_10_13_15_20_should_remove_
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node20);
     TEST_ASSERT_EQUAL_NODE(&node13, &node20, 'r', &node15);
     TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'd', &node10);
+}
+
+/** Encounter case 1a on the left child after remove successor
+ *
+ *      parent's left                      parent's left                   parent's left
+ *            |                                  |                               |
+ *            v                                  v                               v
+ *          10(b)                              10(b)                           10(b)
+ *       /         \       successor 1      /         \                      /        \
+ *     5(r)       15(r)   ------------>   5(r)       15(r)  ------------> 7(r)       15(b)
+ *    /   \       /   \                  //  \       /   \               /   \       /   \
+ *  1(b) 7(b)  13(b) 20(b)             NULL 7(b)  13(b) 20(b)          5(b) 8(b)  13(b) 20(b)
+ *          \                                  \
+ *          8(r)                               8(r)
+ */
+void test_removeNextLargerSuccessor_given_nodes_1_5_7_8_10_13_15_20_should_remove_successor_1(void)
+{
+    setNode(&node8, NULL, NULL, 'r');
+    setNode(&node7, NULL, &node8, 'b');
+    setNode(&node13, NULL, NULL, 'b');
+    setNode(&node20, NULL, NULL, 'b');
+    setNode(&node1, NULL, NULL, 'b');
+    setNode(&node5, &node1, &node7, 'r');
+    setNode(&node15, &node13, &node20, 'r');
+    setNode(&node10, &node5, &node15, 'b');
+    Node *parent = &node10, *removeNode;
+
+    removeNode = removeNextLargerSuccessor(&parent);
+
+    TEST_ASSERT_EQUAL_PTR(&node10, parent);
+    TEST_ASSERT_EQUAL_PTR(&node1, removeNode);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node5);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node8);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node8, 'r', &node7);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node13);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node20);
+    TEST_ASSERT_EQUAL_NODE(&node13, &node20, 'r', &node15);
+    TEST_ASSERT_EQUAL_NODE(&node7, &node15, 'b', &node10);
 }
 
 /** Encounter case 1b on the left child after remove successor
@@ -1031,4 +1125,70 @@ void test_removeNextLargerSuccessor_given_nodes_1_4_5_6_7_8_10_13_15_20_should_r
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node20);
     TEST_ASSERT_EQUAL_NODE(&node13, &node20, 'b', &node15);
     TEST_ASSERT_EQUAL_NODE(&node7, &node15, 'b', &node10);
+}
+
+/**
+ *      parent's left                      parent's left                    parent's left                   parent's left
+ *            |                                  |                                |                               |
+ *            v                                  v                                v                               v
+ *          20(r)                              20(r)                            20(r)                           20(b)
+ *       /         \        remove 30       /         \                      /        \\                     /        \
+ *    10(b)       30(b)   ------------>  10(b)       40(b)  ------------> 10(b)      40(d) ------------>  10(r)      40(b)
+ *    /   \       /   \                  /   \       /                   /   \       /                    /   \       /
+ *  5(b) 15(b)  25(b) 40(b)            5(b) 15(b)  25(b)               5(b) 15(b)  25(r)                5(b) 15(b)  25(r)
+ */
+void test_delRedBlackTree_remove_30_should_replace_with_40_from_tree_with_5_10_15_20_30_25_40_nodes(void)
+{
+    setNode(&node5, NULL, NULL, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
+    setNode(&node25, NULL, NULL, 'b');
+    setNode(&node40, NULL, NULL, 'b');
+    setNode(&node30, &node25, &node40, 'b');
+    setNode(&node20, &node10, &node30, 'r');
+    Node *parent = &node20, *removeNode;
+
+    removeNode = _delRedBlackTree(&parent, &node30);
+
+    TEST_ASSERT_EQUAL_PTR(&node20, parent);
+    TEST_ASSERT_EQUAL_PTR(&node30, removeNode);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node5);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node15);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'r', &node10);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node25);
+    TEST_ASSERT_EQUAL_NODE(&node25, NULL, 'b', &node40);
+    TEST_ASSERT_EQUAL_NODE(&node10, &node40, 'b', &node20);
+}
+
+/**
+ *      parent's left                      parent's left                    parent's left                   parent's left
+ *            |                                  |                                |                               |
+ *            v                                  v                                v                               v
+ *          20(r)                              25(r)                            25(r)                           25(b)
+ *       /         \        remove 20       /         \                      /        \\                     /        \
+ *    10(b)       30(b)   ------------>  10(b)       30(b)  ------------> 10(b)      30(d)  ------------>  10(r)     30(b)
+ *    /   \       /   \                  /   \      //    \               /   \           \                /   \         \
+ *  5(b) 15(b)  25(b) 40(b)            5(b) 15(b) NULL   40(b)          5(b) 15(b)       40(r)           5(b) 15(b)     40(r)
+ */
+void test_delRedBlackTree_remove_20_should_replace_with_25_from_tree_with_5_10_15_20_30_25_40_nodes(void)
+{
+    setNode(&node5, NULL, NULL, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
+    setNode(&node25, NULL, NULL, 'b');
+    setNode(&node40, NULL, NULL, 'b');
+    setNode(&node30, &node25, &node40, 'b');
+    setNode(&node20, &node10, &node30, 'r');
+    Node *parent = &node20, *removeNode;
+
+    removeNode = _delRedBlackTree(&parent, &node20);
+
+    TEST_ASSERT_EQUAL_PTR(&node25, parent);
+    TEST_ASSERT_EQUAL_PTR(&node20, removeNode);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node5);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node15);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'r', &node10);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node40);
+    TEST_ASSERT_EQUAL_NODE(NULL, &node40, 'b', &node30);
+    TEST_ASSERT_EQUAL_NODE(&node10, &node30, 'b', &node25);
 }

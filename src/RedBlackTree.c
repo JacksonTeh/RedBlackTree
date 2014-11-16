@@ -167,14 +167,28 @@ Node *delRedBlackTree(Node **rootPtr, Node *delNode)
 Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
 {
     Node *root = *rootPtr;
-    Node *node;
+    Node *node, *successorNode;
 
     if(root == NULL)
         Throw(ERR_NODE_UNAVAILABLE);
 
     if(root->data == delNode->data)
     {
-        *rootPtr = NULL;
+        successorNode = removeNextLargerSuccessor(&(*rootPtr)->right);
+
+        if(successorNode != root->right)
+            successorNode->right = (*rootPtr)->right;
+
+        if(successorNode != NULL)
+        {
+            successorNode->colour = (*rootPtr)->colour;
+            *rootPtr = successorNode;
+            (*rootPtr)->left = root->left;
+            selectCases(&(*rootPtr), root);
+        }
+        else
+            *rootPtr = NULL;
+
         return root;
     }
     else if(root->data < delNode->data)
@@ -206,9 +220,33 @@ int isBlack(Node *rootPtr)
         return 0;
 }
 
+/**
+* Note: x == not possible
+*	node          removed node        return
+*	-----------------------------------------
+*	NULL            NULL                x
+*	NULL            red                 0
+*	NULL            black               1
+*	NULL            double black        x
+*	red             NULL                x
+*	red             red                 0
+*	red             black               0
+*	red             double black        x
+*	black           NULL                x
+*	black           red                 0
+*	black           black               0
+*	black           double black        x
+*	double black    NULL                x
+*	double black    red                 1
+*	double black    black               1
+*	double black    double black        x
+*/
 int isDoubleBlack(Node *rootPtr, Node *removeNode)
 {
-    if((rootPtr == NULL || rootPtr->colour == 'd') && removeNode->colour == 'b')
+    if(rootPtr == NULL && removeNode->colour == 'r')
+        return 0;
+    else if((rootPtr == NULL && removeNode->colour == 'b') || (rootPtr->colour == 'd' && removeNode->colour == 'b') || 
+            (rootPtr->colour == 'd' && removeNode->colour == 'r'))
         return 1;
     else
         return 0;
@@ -363,6 +401,9 @@ void restructureLeftRedChild(Node **rootPtr, Node *removeNode)
 Node *removeNextLargerSuccessor(Node **parentPtr)
 {
     Node *removeNode;
+
+    if(*parentPtr == NULL)
+        return NULL;
 
     if((*parentPtr)->left == NULL && (*parentPtr)->right == NULL)
     {
