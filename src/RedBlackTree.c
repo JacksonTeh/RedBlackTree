@@ -245,8 +245,8 @@ int isDoubleBlack(Node *rootPtr, Node *removeNode)
 {
     if(rootPtr == NULL && removeNode->colour == 'r')
         return 0;
-    else if((rootPtr == NULL && removeNode->colour == 'b') || (rootPtr->colour == 'd' && removeNode->colour == 'b') || 
-            (rootPtr->colour == 'd' && removeNode->colour == 'r'))
+    else if((rootPtr == NULL && removeNode->colour == 'b') ||
+            (rootPtr->colour == 'd' && (removeNode->colour == 'b' || removeNode->colour == 'r')))
         return 1;
     else
         return 0;
