@@ -176,7 +176,10 @@ Node *_delRedBlackTree(Node **rootPtr, Node *delNode)
 
     if(root->data == delNode->data)
     {
-        successorNode = removeNextLargerSuccessor(&(*rootPtr)->right);
+        if((*rootPtr)->right == NULL)
+            successorNode = removeNextLargerSuccessor(&(*rootPtr)->left);
+        else
+            successorNode = removeNextLargerSuccessor(&(*rootPtr)->right);
 
         if(successorNode != root->right)
             successorNode->right = (*rootPtr)->right;

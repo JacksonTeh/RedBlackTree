@@ -1138,7 +1138,7 @@ void test_removeNextLargerSuccessor_given_nodes_1_4_5_6_7_8_10_13_15_20_should_r
  *    /   \       /   \                  /   \       /                   /   \       /                    /   \       /
  *  5(b) 15(b)  25(b) 40(b)            5(b) 15(b)  25(b)               5(b) 15(b)  25(r)                5(b) 15(b)  25(r)
  */
-void test_delRedBlackTree_remove_30_should_replace_with_40_from_tree_with_5_10_15_20_30_25_40_nodes(void)
+void test_delRedBlackTree_remove_30_should_replace_with_40_from_tree_with_5_10_15_20_30_25_40_nodes_with_parent_being_red(void)
 {
     setNode(&node5, NULL, NULL, 'b');
     setNode(&node15, NULL, NULL, 'b');
@@ -1159,6 +1159,70 @@ void test_delRedBlackTree_remove_30_should_replace_with_40_from_tree_with_5_10_1
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node25);
     TEST_ASSERT_EQUAL_NODE(&node25, NULL, 'b', &node40);
     TEST_ASSERT_EQUAL_NODE(&node10, &node40, 'b', &node20);
+}
+
+/**
+ *      parent's left                      parent's left                    parent's left                   parent's left
+ *            |                                  |                                |                               |
+ *            v                                  v                                v                               v
+ *          20(b)                              20(b)                            20(b)                           20(d)
+ *       /         \        remove 30       /         \                      /        \\                     /        \
+ *    10(b)       30(b)   ------------>  10(b)       40(b)  ------------> 10(b)      40(d) ------------>  10(r)      40(b)
+ *    /   \       /   \                  /   \       /                   /   \       /                    /   \       /
+ *  5(b) 15(b)  25(b) 40(b)            5(b) 15(b)  25(b)               5(b) 15(b)  25(r)                5(b) 15(b)  25(r)
+ */
+void test_delRedBlackTree_remove_30_should_replace_with_40_from_tree_with_5_10_15_20_30_25_40_nodes_with_parent_being_black(void)
+{
+    setNode(&node5, NULL, NULL, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
+    setNode(&node25, NULL, NULL, 'b');
+    setNode(&node40, NULL, NULL, 'b');
+    setNode(&node30, &node25, &node40, 'b');
+    setNode(&node20, &node10, &node30, 'b');
+    Node *parent = &node20, *removeNode;
+
+    removeNode = _delRedBlackTree(&parent, &node30);
+
+    TEST_ASSERT_EQUAL_PTR(&node20, parent);
+    TEST_ASSERT_EQUAL_PTR(&node30, removeNode);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node5);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node15);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'r', &node10);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node25);
+    TEST_ASSERT_EQUAL_NODE(&node25, NULL, 'b', &node40);
+    TEST_ASSERT_EQUAL_NODE(&node10, &node40, 'd', &node20);
+}
+
+/**
+ *      parent's left                      parent's left
+ *            |                                  |
+ *            v                                  v
+ *          20(b)                              20(b)
+ *       /         \        remove 30       /         \
+ *    10(b)       30(b)   ------------>  10(b)       25(b)
+ *    /   \       /                      /   \
+ *  5(r) 15(r)  25(r)                 5(b) 15(b)
+ */
+void test_delRedBlackTree_remove_30_should_replace_with_25_from_tree_with_5_10_15_20_30_25_nodes(void)
+{
+    setNode(&node5, NULL, NULL, 'r');
+    setNode(&node15, NULL, NULL, 'r');
+    setNode(&node10, &node5, &node15, 'b');
+    setNode(&node25, NULL, NULL, 'r');
+    setNode(&node30, &node25, NULL, 'b');
+    setNode(&node20, &node10, &node30, 'b');
+    Node *parent = &node20, *removeNode;
+
+    removeNode = _delRedBlackTree(&parent, &node30);
+
+    TEST_ASSERT_EQUAL_PTR(&node20, parent);
+    TEST_ASSERT_EQUAL_PTR(&node30, removeNode);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node5);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node15);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'b', &node10);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node25);
+    TEST_ASSERT_EQUAL_NODE(&node10, &node25, 'b', &node20);
 }
 
 /**
