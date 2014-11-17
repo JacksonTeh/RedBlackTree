@@ -6,7 +6,7 @@
 #include "Rotations.h"
 #include "CException.h"
 
-Node node1, node2, node4, node5, node6, node7, node8, node10, node13, node14, node15, node17, node20, node25, node30, node40;
+Node node1, node2, node4, node5, node6, node7, node8, node10, node13, node14, node15, node17, node20, node25, node30, node40, node50;
 
 void setUp(void)
 {
@@ -26,6 +26,7 @@ void setUp(void)
     resetNode(&node25, 25);
     resetNode(&node30, 30);
     resetNode(&node40, 40);
+    resetNode(&node50, 50);
 }
 
 void tearDown(void)
@@ -36,7 +37,7 @@ void tearDown(void)
  *                remove 5
  * root -> 1(b)  ---------> Throw ERR_NODE_UNAVAILABLE
  */
-void test_delRedBlackTree_remove_5_from_tree_with_only_root_1(void)
+void test_delRedBlackTree_remove_5_from_tree_with_only_root_1_should_throw_ERR_NODE_UNAVAILABLE(void)
 {
     CEXCEPTION_T err;
     setNode(&node1, NULL, NULL, 'b');
@@ -1158,6 +1159,43 @@ void test_delRedBlackTree_remove_30_should_replace_with_40_from_tree_with_5_10_1
     TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node25);
     TEST_ASSERT_EQUAL_NODE(&node25, NULL, 'b', &node40);
     TEST_ASSERT_EQUAL_NODE(&node10, &node40, 'b', &node20);
+}
+
+/**
+ *      parent's left                      parent's left
+ *            |                                  |
+ *            v                                  v
+ *          20(r)                              20(r)
+ *       /         \        remove 30       /         \
+ *    10(b)       30(b)   ------------>  10(b)       40(b)
+ *    /   \       /   \                  /   \       /   \
+ *  5(b) 15(b)  25(b) 40(b)            5(b) 15(b) 25(b) 50(r)
+ *                        \
+ *                       50(r)
+ */
+void test_delRedBlackTree_remove_30_should_replace_with_40_from_tree_with_5_10_15_20_30_25_40_50_nodes(void)
+{
+    setNode(&node5, NULL, NULL, 'b');
+    setNode(&node15, NULL, NULL, 'b');
+    setNode(&node10, &node5, &node15, 'b');
+    setNode(&node25, NULL, NULL, 'b');
+    setNode(&node50, NULL, NULL, 'r');
+    setNode(&node40, NULL, &node50, 'b');
+    setNode(&node30, &node25, &node40, 'b');
+    setNode(&node20, &node10, &node30, 'r');
+    Node *parent = &node20, *removeNode;
+
+    removeNode = _delRedBlackTree(&parent, &node30);
+
+    TEST_ASSERT_EQUAL_PTR(&node20, parent);
+    TEST_ASSERT_EQUAL_PTR(&node30, removeNode);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node5);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node15);
+    TEST_ASSERT_EQUAL_NODE(&node5, &node15, 'b', &node10);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node25);
+    TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node50);
+    TEST_ASSERT_EQUAL_NODE(&node25, &node50, 'b', &node40);
+    TEST_ASSERT_EQUAL_NODE(&node10, &node40, 'r', &node20);
 }
 
 /**

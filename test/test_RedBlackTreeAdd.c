@@ -50,6 +50,27 @@ void test_addRedBlackTree_add_10_to_empty_tree(void)
 }
 
 /** 2-node case
+ *                 add 10
+ * root -> 10(b)  -------> Throw ERR_EQUIVALENT_NODE
+ */
+void test_addRedBlackTree_add_10_to_use_tree_with_only_root_10_should_throw_ERR_EQUIVALENT_NODE(void)
+{
+    CEXCEPTION_T err;
+    setNode(&node10, NULL, NULL, 'b');
+    Node *root = &node10;
+
+    Try{
+        addRedBlackTree(&root, &node10);
+        TEST_FAIL_MESSAGE("Expected ERR_EQUIVALENT_NODE to be thrown. But receive none");
+    } Catch(err)
+    {
+        TEST_ASSERT_EQUAL_PTR(&node10, root);
+        //                      left  right colour  node
+        TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node10);
+    }
+}
+
+/** 2-node case
  *                 add 5
  * root -> 10(b)  ------->   10(b)  <- root
  *                           /

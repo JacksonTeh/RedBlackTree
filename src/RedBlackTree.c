@@ -28,12 +28,14 @@ void _addRedBlackTree(Node **rootPtr, Node *newNode)
         return;
     }
 
-    if(newNode->data < root->data)
+    if(newNode->data == root->data)
+        Throw(ERR_EQUIVALENT_NODE);
+    else if(newNode->data < root->data)
     {
         _addRedBlackTree(&root->left, newNode);
         fixChildViolation(&root);
     }
-    else
+    else if(newNode->data > root->data)
     {
         _addRedBlackTree(&root->right, newNode);
         fixChildViolation(&root);
